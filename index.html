@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ga">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Athbheochan Labs</title>
+  <meta name="description" content="Open-source tools for the normalisation of Irish in everyday digital spaces.">
+  <meta property="og:title" content="Athbheochan Labs">
+  <meta property="og:description"
+    content="Open-source tools for the normalisation of Irish in everyday digital spaces.">
+  <meta name="theme-color" content="#0F6E56">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #f5f3ee;
+      --ink: #1c1c1a;
+      --ink2: #5a5855;
+      --ink3: #9a9895;
+      --accent: #0F6E56;
+      --accent50: #e1f5ee;
+      --accent100: #9fe1cb;
+      --accent800: #085041;
+      --surface: #fff;
+      --border: rgba(28, 28, 26, 0.10);
+      --border2: rgba(28, 28, 26, 0.16);
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(245, 243, 238, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px
+    }
+
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink3);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink)
+    }
+
+    .nav-links a.gh {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--ink);
+      border: 1px solid var(--border2);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .nav-links a.gh:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(42px, 6vw, 72px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--ink);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      background: var(--accent);
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent800)
+    }
+
+    .btn-ghost {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-ghost:hover {
+      color: var(--ink)
+    }
+
+    .btn-ghost svg {
+      opacity: 0.5
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 96px 40px;
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 32px;
+    }
+
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 64px;
+      align-items: start;
+    }
+
+    .about-irish {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.55;
+      border-left: 2px solid var(--accent100);
+      padding-left: 20px;
+    }
+
+    .about-english {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.7;
+    }
+
+    .about-english p+p {
+      margin-top: 16px
+    }
+
+    /* ── PROJECTS ── */
+    .projects {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 96px 40px;
+    }
+
+    .projects-inner {
+      max-width: 1080px;
+      margin: 0 auto
+    }
+
+    .projects-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .projects-title {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    .projects-gh-link {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--ink3);
+      text-decoration: none;
+    }
+
+    .projects-gh-link:hover {
+      color: var(--accent)
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 28px;
+      background: var(--bg);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent100);
+      transform: translateY(-2px);
+    }
+
+    .project-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    .project-icon.green {
+      background: var(--accent);
+      color: var(--bg)
+    }
+
+    .project-icon.dark {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .project-status {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .status-live {
+      background: var(--accent50);
+      color: var(--accent800)
+    }
+
+    .project-name {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    .project-desc {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink3);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .project-tag {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .project-tag svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.7
+    }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 96px 40px;
+    }
+
+    .phil-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .phil-item {}
+
+    .phil-num {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent100);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .phil-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .phil-body {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink3);
+      line-height: 1.7;
+    }
+
+    /* ── CONTRIBUTE ── */
+    .contribute {
+      background: var(--ink);
+      padding: 96px 40px;
+    }
+
+    .contribute-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .contribute-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent100);
+      margin-bottom: 20px;
+    }
+
+    .contribute-headline {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--bg);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .contribute-body {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: rgba(245, 243, 238, 0.55);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .btn-light {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s;
+    }
+
+    .btn-light:hover {
+      background: var(--accent100)
+    }
+
+    .contribute-ways {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .way {
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(245, 243, 238, 0.08);
+      background: rgba(245, 243, 238, 0.03);
+    }
+
+    .way-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-style: italic;
+      color: var(--bg);
+      margin-bottom: 4px;
+    }
+
+    .way-body {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: rgba(245, 243, 238, 0.4);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1080px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink3);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .footer-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--ink3);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink)
+    }
+
+    .footer-note {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--ink3);
+      letter-spacing: 0.04em;
+      width: 100%;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:680px) {
+      nav {
+        padding: 0 20px
+      }
+
+      .hero {
+        padding: 100px 20px 60px
+      }
+
+      .about {
+        padding: 64px 20px
+      }
+
+      .about-body {
+        grid-template-columns: 1fr
+      }
+
+      .projects {
+        padding: 64px 20px
+      }
+
+      .projects-header {
+        flex-direction: column;
+        gap: 8px
+      }
+
+      .philosophy {
+        padding: 64px 20px
+      }
+
+      .phil-grid {
+        grid-template-columns: 1fr;
+        gap: 32px
+      }
+
+      .contribute {
+        padding: 64px 20px
+      }
+
+      .contribute-inner {
+        grid-template-columns: 1fr
+      }
+
+      footer {
+        padding: 32px 20px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">
+      <span class="nav-dot"></span>
+      Athbheochan Labs
+    </a>
+    <div class="nav-links">
+      <a href="#focloir">Foclóir Póca</a>
+      <a href="#fealsúnacht">Fealsúnacht</a>
+      <a href="https://github.com/athbheochan-labs" target="_blank" rel="noopener" class="gh">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Athbheochan Labs</div>
+    <h1 class="hero-headline">
+      Uirlisí digiteacha<br>
+      don <em>Ghaeilge</em> lae inniu.
+    </h1>
+    <p class="hero-sub">
+      Open-source tools for the normalisation of Irish in everyday digital spaces —
+      not to teach the language, but to make it feel unremarkable.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#focloir">Foclóir Póca →</a>
+      <a class="btn-ghost" href="https://github.com/athbheochan-labs" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+        </svg>
+        athbheochan-labs ar GitHub
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="faoi">
+    <div class="section-label">Faoin eagraíocht · About</div>
+    <div class="about-body">
+      <div class="about-irish">
+        Ní múineann Athbheochan Labs an Ghaeilge. Déanann sé í a chur ar fáil — i bhfeidhmchláir, i huirlisí, agus i
+        gcomhthéacsanna nach mbeifeá ag súil léi.
+      </div>
+      <div class="about-english">
+        <p>There is no shortage of Irish language learning tools. What is missing is infrastructure — dictionary apps,
+          everyday utilities, commercial tools — that treat Irish as a default rather than a subject.</p>
+        <p>Athbheochan Labs builds open-source software to close that gap. Everything we make is free, fully open, and
+          built to last.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+
+  <!-- PROJECTS -->
+  <section class="projects" id="focloir">
+    <div class="projects-inner">
+      <div class="projects-header">
+        <h2 class="projects-title">Tionscadal · Project</h2>
+        <a class="projects-gh-link" href="https://github.com/athbheochan-labs" target="_blank"
+          rel="noopener">github.com/athbheochan-labs →</a>
+      </div>
+      <div class="projects-grid" style="grid-template-columns:minmax(300px,480px)">
+
+        <a class="project-card" href="https://focloir.athbheochan.irish" target="_blank" rel="noopener">
+          <div class="project-card-head">
+            <div class="project-icon green">f</div>
+            <span class="project-status status-live">Beo · Live</span>
+          </div>
+          <div class="project-name">Foclóir Póca</div>
+          <div class="project-desc">Free, open-source Irish dictionary for Android and the web. Irish→English via Ó
+            Dónaill, English→Irish via the New English–Irish Dictionary.</div>
+          <div class="project-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+            </svg>
+            foinse oscailte · open-source
+          </div>
+        </a>
+
+      </div>
+      <p style="margin-top:24px;font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ink3);">Tuilleadh
+        ag teacht. · More coming.</p>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy" id="fealsúnacht">
+    <div class="section-label">Fealsúnacht · Philosophy</div>
+    <div class="phil-grid">
+      <div class="phil-item">
+        <div class="phil-num">01</div>
+        <div class="phil-title">Normalú, ní múineadh</div>
+        <div class="phil-body">We don't build language learning tools. We build infrastructure that makes Irish feel
+          like a natural part of digital life — for speakers who already have the language and just need the tools.
+        </div>
+      </div>
+      <div class="phil-item">
+        <div class="phil-num">02</div>
+        <div class="phil-title">Oscailte i gcónaí</div>
+        <div class="phil-body">Everything we build is open-source, forever. No paywalled features, no proprietary core.
+          The Irish language community should own the tools built for it.</div>
+      </div>
+      <div class="phil-item">
+        <div class="phil-num">03</div>
+        <div class="phil-title">Bearna a líonadh</div>
+        <div class="phil-body">We look for genuine gaps — things that don't exist yet and are genuinely needed — rather
+          than rebuilding what already works well elsewhere.</div>
+      </div>
+      <div class="phil-item">
+        <div class="phil-num">04</div>
+        <div class="phil-title">Simplíocht</div>
+        <div class="phil-body">Simple architecture, minimal dependencies, low barrier to contribution. Anyone with Irish
+          language knowledge or basic development skills should be able to get involved.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTRIBUTE -->
+  <section class="contribute">
+    <div class="contribute-inner">
+      <div>
+        <div class="contribute-label">Rannchuidiú · Contribute</div>
+        <h2 class="contribute-headline">Ní gá Svelte a bheith agat.</h2>
+        <p class="contribute-body">You don't need to be a developer to contribute to Athbheochan Labs. Irish language
+          knowledge is just as valuable as code. Suggest words, fix translations, improve copy, or report something that
+          feels wrong.</p>
+        <a class="btn-light" href="https://github.com/athbheochan-labs" target="_blank" rel="noopener">Féach ar na
+          tionscadail ar GitHub</a>
+      </div>
+      <div class="contribute-ways">
+        <div class="way">
+          <div class="way-title">Teanga · Language</div>
+          <div class="way-body">Suggest words for the word-of-the-day list, flag translation errors, or contribute to
+            the Cnuasach phrase bank. No code required.</div>
+        </div>
+        <div class="way">
+          <div class="way-title">Dearadh · Design</div>
+          <div class="way-body">Improve layouts, suggest UI copy, or contribute to the shared CSS token system. Plain
+            CSS — no framework knowledge needed.</div>
+        </div>
+        <div class="way">
+          <div class="way-title">Cód · Code</div>
+          <div class="way-body">SvelteKit, TypeScript, and plain HTML. Issues are labelled <em>good first issue</em> for
+            anyone getting started.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <span class="footer-dot"></span>
+      Athbheochan Labs
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/athbheochan-labs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://focloir.athbheochan.irish" target="_blank" rel="noopener">Foclóir Póca</a>
+      <a href="mailto:aaron@athbheochan.irish">Teagmháil</a>
+    </div>
+    <div class="footer-note">
+      Gach tionscadal faoi chead únais MIT · All projects MIT licensed · Déanta in Éirinn
+    </div>
+  </footer>
+
+</body>
+
+</html>
