@@ -23,6 +23,16 @@
     plausible.init = plausible.init || function (i) { plausible.o = i || {} };
     plausible.init();
   </script>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || theme === 'light') {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch (error) { }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap"
@@ -62,8 +72,34 @@
       color-scheme: light;
     }
 
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #1c1c1a;
+      --ink: #f5f3ee;
+      --ink2: #c5c3be;
+      --ink3: #8c8984;
+      --accent: #9FE1CB;
+      --accent50: rgba(15, 110, 86, 0.2);
+      --accent100: #0F6E56;
+      --accent800: #9FE1CB;
+      --accent-soft: rgba(159, 225, 203, 0.52);
+      --surface: #242422;
+      --border: rgba(245, 243, 238, 0.08);
+      --border2: rgba(245, 243, 238, 0.14);
+      --nav-bg: rgba(28, 28, 26, 0.86);
+      --contribute-bg: var(--surface);
+      --contribute-ink: var(--ink);
+      --contribute-muted: rgba(245, 243, 238, 0.68);
+      --contribute-card-bg: rgba(245, 243, 238, 0.04);
+      --contribute-border: var(--border2);
+      --contribute-button-bg: var(--accent);
+      --contribute-button-ink: var(--bg);
+      --contribute-button-hover: #c5f0df;
+      --contribute-accent: var(--accent);
+    }
+
     @media(prefers-color-scheme:dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         color-scheme: dark;
         --bg: #1c1c1a;
         --ink: #f5f3ee;
@@ -176,6 +212,38 @@
     .nav-links a.gh:hover {
       border-color: var(--accent);
       color: var(--accent)
+    }
+
+    .theme-toggle {
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 3px;
+    }
+
+    .theme-toggle span {
+      border-radius: 999px;
+      padding: 6px 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .theme-toggle[aria-pressed="false"] .theme-light,
+    .theme-toggle[aria-pressed="true"] .theme-dark {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent)
     }
 
     /* ── HERO ── */
@@ -668,6 +736,18 @@
         padding: 0 20px
       }
 
+      .nav-links {
+        gap: 12px
+      }
+
+      .nav-links a:not(.gh) {
+        display: none
+      }
+
+      .theme-toggle {
+        font-size: 10px
+      }
+
       .hero {
         padding: 100px 20px 60px
       }
@@ -736,6 +816,10 @@
         </svg>
         GitHub
       </a>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+        <span class="theme-light">Light</span>
+        <span class="theme-dark">Dark</span>
+      </button>
     </div>
   </nav>
 
@@ -926,6 +1010,42 @@
         track('contribute_click');
       });
     });
+
+    const themeToggle = document.querySelector('.theme-toggle');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const getActiveTheme = () => {
+      const savedTheme = document.documentElement.dataset.theme;
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme;
+      }
+      return systemPrefersDark.matches ? 'dark' : 'light';
+    };
+
+    const syncThemeToggle = () => {
+      const isDark = getActiveTheme() === 'dark';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    };
+
+    if (themeToggle) {
+      syncThemeToggle();
+
+      themeToggle.addEventListener('click', () => {
+        const nextTheme = getActiveTheme() === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = nextTheme;
+        try {
+          localStorage.setItem('theme', nextTheme);
+        } catch (error) { }
+        syncThemeToggle();
+      });
+
+      systemPrefersDark.addEventListener('change', () => {
+        if (!document.documentElement.dataset.theme) {
+          syncThemeToggle();
+        }
+      });
+    }
   </script>
 
 </body>
