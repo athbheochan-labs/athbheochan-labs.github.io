@@ -14,7 +14,8 @@
   <link rel="shortcut icon" href="favicon.ico?v=2">
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
   <link rel="manifest" href="site.webmanifest?v=2">
-  <meta name="theme-color" content="#0F6E56">
+  <meta name="theme-color" content="#0F6E56" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1c1a" media="(prefers-color-scheme: dark)">
   <!-- Privacy-friendly analytics by Plausible -->
   <script async src="https://plausible.io/js/pa-l2v5ofpn184B2qzJSq4W-.js"></script>
   <script>
@@ -42,11 +43,51 @@
       --accent50: #e1f5ee;
       --accent100: #9fe1cb;
       --accent800: #085041;
+      --accent-soft: var(--accent100);
       --surface: #fff;
       --border: rgba(28, 28, 26, 0.10);
       --border2: rgba(28, 28, 26, 0.16);
+      --nav-bg: rgba(245, 243, 238, 0.88);
+      --contribute-bg: var(--ink);
+      --contribute-ink: var(--bg);
+      --contribute-muted: rgba(245, 243, 238, 0.55);
+      --contribute-card-bg: rgba(245, 243, 238, 0.03);
+      --contribute-border: rgba(245, 243, 238, 0.08);
+      --contribute-button-bg: var(--bg);
+      --contribute-button-ink: var(--ink);
+      --contribute-button-hover: var(--accent100);
+      --contribute-accent: var(--accent100);
       --serif: 'Crimson Pro', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
+      color-scheme: light;
+    }
+
+    @media(prefers-color-scheme:dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #1c1c1a;
+        --ink: #f5f3ee;
+        --ink2: #c5c3be;
+        --ink3: #8c8984;
+        --accent: #9FE1CB;
+        --accent50: rgba(15, 110, 86, 0.2);
+        --accent100: #0F6E56;
+        --accent800: #9FE1CB;
+        --accent-soft: rgba(159, 225, 203, 0.52);
+        --surface: #242422;
+        --border: rgba(245, 243, 238, 0.08);
+        --border2: rgba(245, 243, 238, 0.14);
+        --nav-bg: rgba(28, 28, 26, 0.86);
+        --contribute-bg: var(--surface);
+        --contribute-ink: var(--ink);
+        --contribute-muted: rgba(245, 243, 238, 0.68);
+        --contribute-card-bg: rgba(245, 243, 238, 0.04);
+        --contribute-border: var(--border2);
+        --contribute-button-bg: var(--accent);
+        --contribute-button-ink: var(--bg);
+        --contribute-button-hover: #c5f0df;
+        --contribute-accent: var(--accent);
+      }
     }
 
     html {
@@ -73,7 +114,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 40px;
-      background: rgba(245, 243, 238, 0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -206,7 +247,7 @@
       font-family: var(--sans);
       font-size: 13px;
       font-weight: 500;
-      color: #fff;
+      color: var(--bg);
       background: var(--accent);
       padding: 10px 22px;
       border-radius: 7px;
@@ -277,7 +318,7 @@
       font-weight: 300;
       color: var(--ink);
       line-height: 1.55;
-      border-left: 2px solid var(--accent100);
+      border-left: 2px solid var(--accent-soft);
       padding-left: 20px;
     }
 
@@ -455,7 +496,7 @@
       font-size: 48px;
       font-style: italic;
       font-weight: 300;
-      color: var(--accent100);
+      color: var(--accent-soft);
       line-height: 1;
       margin-bottom: 12px;
     }
@@ -478,7 +519,7 @@
 
     /* ── CONTRIBUTE ── */
     .contribute {
-      background: var(--ink);
+      background: var(--contribute-bg);
       padding: 96px 40px;
     }
 
@@ -497,7 +538,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent100);
+      color: var(--contribute-accent);
       margin-bottom: 20px;
     }
 
@@ -506,7 +547,7 @@
       font-size: 36px;
       font-style: italic;
       font-weight: 300;
-      color: var(--bg);
+      color: var(--contribute-ink);
       line-height: 1.2;
       margin-bottom: 16px;
     }
@@ -514,7 +555,7 @@
     .contribute-body {
       font-family: var(--sans);
       font-size: 14px;
-      color: rgba(245, 243, 238, 0.55);
+      color: var(--contribute-muted);
       line-height: 1.75;
       margin-bottom: 28px;
     }
@@ -523,8 +564,8 @@
       font-family: var(--sans);
       font-size: 13px;
       font-weight: 500;
-      color: var(--ink);
-      background: var(--bg);
+      color: var(--contribute-button-ink);
+      background: var(--contribute-button-bg);
       padding: 10px 22px;
       border-radius: 7px;
       text-decoration: none;
@@ -533,7 +574,7 @@
     }
 
     .btn-light:hover {
-      background: var(--accent100)
+      background: var(--contribute-button-hover)
     }
 
     .contribute-ways {
@@ -545,22 +586,22 @@
     .way {
       padding: 20px;
       border-radius: 10px;
-      border: 1px solid rgba(245, 243, 238, 0.08);
-      background: rgba(245, 243, 238, 0.03);
+      border: 1px solid var(--contribute-border);
+      background: var(--contribute-card-bg);
     }
 
     .way-title {
       font-family: var(--serif);
       font-size: 16px;
       font-style: italic;
-      color: var(--bg);
+      color: var(--contribute-ink);
       margin-bottom: 4px;
     }
 
     .way-body {
       font-family: var(--sans);
       font-size: 12px;
-      color: rgba(245, 243, 238, 0.4);
+      color: var(--contribute-muted);
       line-height: 1.6;
     }
 
